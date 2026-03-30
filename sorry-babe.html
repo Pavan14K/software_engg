@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>I'm Sorry Baby 🥺</title>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    min-height: 100vh;
+    background: #fff0f5;
+    font-family: 'Nunito', sans-serif;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  /* Floating hearts background */
+  .hearts-bg {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .heart-float {
+    position: absolute;
+    bottom: -50px;
+    font-size: 1.5rem;
+    animation: floatUp linear infinite;
+    opacity: 0.4;
+  }
+  @keyframes floatUp {
+    0%   { transform: translateY(0) rotate(0deg); opacity: 0.4; }
+    100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+  }
+
+  .card {
+    position: relative;
+    z-index: 1;
+    background: white;
+    border-radius: 32px;
+    padding: 40px 32px;
+    max-width: 420px;
+    width: 100%;
+    box-shadow: 0 20px 60px rgba(255, 100, 150, 0.2);
+    text-align: center;
+    animation: popIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+  @keyframes popIn {
+    from { transform: scale(0.5); opacity: 0; }
+    to   { transform: scale(1);   opacity: 1; }
+  }
+
+  .emoji-big {
+    font-size: 5rem;
+    animation: wiggle 1s ease-in-out infinite alternate;
+    display: block;
+    margin-bottom: 12px;
+  }
+  @keyframes wiggle {
+    from { transform: rotate(-10deg) scale(1); }
+    to   { transform: rotate(10deg) scale(1.15); }
+  }
+
+  h1 {
+    font-family: 'Pacifico', cursive;
+    color: #ff4d7d;
+    font-size: 2rem;
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+
+  .subtitle {
+    color: #aaa;
+    font-size: 0.9rem;
+    margin-bottom: 28px;
+    font-style: italic;
+  }
+
+  .excuse-box {
+    background: #fff0f5;
+    border-radius: 16px;
+    padding: 18px 20px;
+    margin-bottom: 24px;
+    border: 2px dashed #ffb3cc;
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.6;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .btn {
+    background: linear-gradient(135deg, #ff4d7d, #ff85a1);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 14px 32px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+    font-weight: 900;
+    cursor: pointer;
+    margin: 6px;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 6px 20px rgba(255, 77, 125, 0.35);
+  }
+  .btn:hover { transform: translateY(-2px) scale(1.04); box-shadow: 0 10px 28px rgba(255,77,125,0.4); }
+  .btn:active { transform: scale(0.97); }
+
+  .btn-ghost {
+    background: white;
+    color: #ff4d7d;
+    border: 2px solid #ffb3cc;
+    box-shadow: none;
+  }
+  .btn-ghost:hover { background: #fff0f5; box-shadow: none; }
+
+  #no-btn {
+    transition: all 0.1s;
+    position: relative;
+  }
+
+  .forgiven-screen {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+  }
+  .forgiven-screen.show { display: flex; }
+  .card.forgiven h1 { color: #ff4d7d; }
+
+  .meter-wrap {
+    width: 100%;
+    background: #ffe0eb;
+    border-radius: 50px;
+    height: 14px;
+    margin: 14px 0;
+    overflow: hidden;
+  }
+  .meter-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #ff4d7d, #ff85a1);
+    border-radius: 50px;
+    width: 0%;
+    transition: width 0.4s;
+  }
+  .meter-label { font-size: 0.8rem; color: #aaa; margin-bottom: 4px; text-align: left; }
+
+  .confetti-emoji {
+    font-size: 3rem;
+    animation: spin 0.5s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .steps {
+    list-style: none;
+    margin: 16px 0;
+    text-align: left;
+  }
+  .steps li {
+    padding: 8px 0;
+    font-size: 0.95rem;
+    color: #555;
+    border-bottom: 1px solid #ffeaf2;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .steps li span { font-size: 1.3rem; }
+
+  .love-counter {
+    font-size: 3rem;
+    font-family: 'Pacifico', cursive;
+    color: #ff4d7d;
+    margin: 16px 0 4px;
+    animation: pulse 1s ease-in-out infinite alternate;
+  }
+  @keyframes pulse { from { transform: scale(1); } to { transform: scale(1.08); } }
+</style>
+</head>
+<body>
+
+<!-- Floating hearts background -->
+<div class="hearts-bg" id="heartsBg"></div>
+
+<!-- Main card -->
+<div class="card" id="mainCard">
+
+  <!-- Step 1: The Apology -->
+  <div id="step1">
+    <span class="emoji-big">🥺</span>
+    <h1>I'm Really Sorry!</h1>
+    <p class="subtitle">(yes, I know I messed up. again.)</p>
+
+    <div class="excuse-box" id="excuseBox">
+      Click below to generate my official excuse 👇
+    </div>
+
+    <button class="btn" onclick="generateExcuse()">🎲 Generate My Excuse</button>
+    <br>
+    <button class="btn" style="margin-top:8px" onclick="goToStep2()">OK I'm done apologizing, forgive me? 🥺</button>
+  </div>
+
+  <!-- Step 2: Yes or No -->
+  <div id="step2" style="display:none">
+    <span class="emoji-big">👉👈</span>
+    <h1>Will You Forgive Me?</h1>
+    <p class="subtitle">Choose wisely. I'm watching. 👀</p>
+    <br>
+    <button class="btn" onclick="forgiven()">💖 Yes, you're forgiven!</button>
+    <button class="btn btn-ghost" id="no-btn" onmouseover="runAway(this)" onclick="runAway(this)">😤 No!</button>
+    <br><br>
+    <p style="color:#ccc; font-size:0.8rem;">⚠️ The "No" button is extremely slippery</p>
+  </div>
+
+  <!-- Step 3: Forgiven! -->
+  <div id="step3" style="display:none">
+    <span class="emoji-big">🎉</span>
+    <h1>YAY! I'm Forgiven!</h1>
+    <p class="subtitle">Official Certificate of Forgiveness™</p>
+
+    <div class="love-counter" id="loveCounter">❤️</div>
+    <p style="color:#aaa; font-size:0.85rem; margin-bottom:16px;">Loading love levels...</p>
+
+    <div class="meter-label">Cuteness of apology</div>
+    <div class="meter-wrap"><div class="meter-fill" id="m1"></div></div>
+
+    <div class="meter-label">How much I love you</div>
+    <div class="meter-wrap"><div class="meter-fill" id="m2"></div></div>
+
+    <div class="meter-label">Probability I do this again 😬</div>
+    <div class="meter-wrap"><div class="meter-fill" id="m3" style="background: linear-gradient(90deg,#ffb347,#ff4d4d)"></div></div>
+
+    <ul class="steps">
+      <li><span>🍕</span> I owe you one pizza</li>
+      <li><span>🤗</span> Hugs on demand (unlimited)</li>
+      <li><span>🎬</span> You pick the movie tonight</li>
+      <li><span>🤐</span> I'll shut up when you're right</li>
+    </ul>
+
+    <button class="btn" onclick="celebrateAgain()">🎊 Celebrate Again!</button>
+  </div>
+
+</div>
+
+<script>
+  // Generate hearts background
+  const bg = document.getElementById('heartsBg');
+  const emojis = ['❤️','💕','💖','💗','💝','🌸','✨'];
+  for (let i = 0; i < 20; i++) {
+    const h = document.createElement('div');
+    h.className = 'heart-float';
+    h.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    h.style.left = Math.random() * 100 + '%';
+    h.style.fontSize = (1 + Math.random() * 1.5) + 'rem';
+    h.style.animationDuration = (6 + Math.random() * 8) + 's';
+    h.style.animationDelay = (Math.random() * 8) + 's';
+    bg.appendChild(h);
+  }
+
+  // Excuses
+  const excuses = [
+    "My brain went on vacation without telling me. HR has been notified. 🧠✈️",
+    "Mercury was in retrograde AND I was hungry. It was out of my hands. 🪐🍔",
+    "A wizard made me do it. I have no further comments at this time. 🧙‍♂️",
+    "I consulted my horoscope and it said 'act like an idiot today'. I was just following orders. ♈",
+    "I was temporarily possessed by the ghost of a very stubborn donkey. 🫏👻",
+    "Scientists have confirmed: my brain cell was taking a nap. There's only one. 🔬",
+    "I was distracted by a very cute dog and lost all common sense. 🐶",
+    "I googled 'how to be annoying' by accident and took notes. 💻😬",
+  ];
+  let excuseIdx = 0;
+
+  function generateExcuse() {
+    document.getElementById('excuseBox').textContent = excuses[excuseIdx % excuses.length];
+    excuseIdx++;
+  }
+
+  function goToStep2() {
+    document.getElementById('step1').style.display = 'none';
+    document.getElementById('step2').style.display = 'block';
+  }
+
+  // Make "No" button run away
+  function runAway(btn) {
+    const card = document.getElementById('mainCard');
+    const cardRect = card.getBoundingClientRect();
+    const btnRect = btn.getBoundingClientRect();
+    const maxX = cardRect.width - btnRect.width - 20;
+    const maxY = cardRect.height - btnRect.height - 20;
+    btn.style.position = 'absolute';
+    btn.style.left = (Math.random() * maxX) + 'px';
+    btn.style.top  = (Math.random() * maxY) + 'px';
+  }
+
+  function forgiven() {
+    document.getElementById('mainCard').style.position = 'relative';
+    document.getElementById('step2').style.display = 'none';
+    document.getElementById('step3').style.display = 'block';
+    startCelebration();
+  }
+
+  function startCelebration() {
+    // Meters fill up
+    setTimeout(() => { document.getElementById('m1').style.width = '97%'; }, 200);
+    setTimeout(() => { document.getElementById('m2').style.width = '100%'; }, 400);
+    setTimeout(() => { document.getElementById('m3').style.width = '45%'; }, 600);
+
+    // Love counter
+    const hearts = ['❤️','❤️❤️','❤️❤️❤️','💖💖💖','💖💖💖💖💖','🥰'];
+    let i = 0;
+    const iv = setInterval(() => {
+      document.getElementById('loveCounter').textContent = hearts[i++];
+      if (i >= hearts.length) clearInterval(iv);
+    }, 300);
+  }
+
+  function celebrateAgain() {
+    document.getElementById('m1').style.width = '0';
+    document.getElementById('m2').style.width = '0';
+    document.getElementById('m3').style.width = '0';
+    setTimeout(startCelebration, 100);
+  }
+</script>
+</body>
+</html>
